@@ -4,6 +4,8 @@
     import { state } from '$lib/app';
     import Todo from '$lib/components/Todo.svelte';
     let focus = -1;
+    import { fly } from 'svelte/transition';
+
 
     function handleKeys(e) {
         if (e.key === 'Escape') {
@@ -13,16 +15,27 @@
 
 </script>
 
-<div class="container">
+<div 
+class="container" 
+transition:fly={{ 
+    duration: 200,
+    x: 100,
+    opacity: 100
+}}
+>
     <div />
     <div class="center">        
         <div class="list">
             {#if $state}
-            {#each $state.todos.uncategorised as todo, id}
-                {#if todo.done}
-                    <Todo name={todo.name} notes={todo.notes} {id} bind:done={todo.done} bind:focus />
-                {/if}
-            {/each}
+            {#if $state.todos.uncategorised.length !== 0}
+                {#each $state.todos.uncategorised as todo, id}
+                    {#if todo.done}
+                        <Todo name={todo.name} notes={todo.notes} {id} bind:done={todo.done} bind:focus />
+                    {/if}
+                {/each}
+            {:else}
+            No completed todos!
+            {/if}
             {/if}
         </div>
         
