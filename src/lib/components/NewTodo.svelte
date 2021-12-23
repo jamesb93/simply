@@ -30,8 +30,34 @@
 
 <div class="container">
 	<form class="entry">
-		<input class="name" bind:value={name} />
-		<input class="details" bind:value={notes} />
+		<input 
+            class="name" 
+            bind:value={ name }
+            on:focus={ () => {
+                if (name === 'New Todo') {
+                    name = ''
+                }
+            }}
+            on:blur={ () => {
+                if (name === '') {
+                    name = 'New Todo'
+                }
+            }}
+        />
+		<input 
+            class="details" 
+            bind:value={notes} 
+            on:focus={ () => {
+                if (notes === 'Notes') {
+                    notes = ''
+                }
+            }}
+            on:blur={ () => {
+                if (notes === '') {
+                    notes = 'Notes'
+                }
+            }}
+        />
 	</form>
 	<div class="add" on:click={addTodo}>+</div>
 </div>
