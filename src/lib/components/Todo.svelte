@@ -3,72 +3,72 @@
 	import { storeState } from '$lib/app';
 	export let name: string = '';
 	export let notes: string = '';
-	export let id: number = -1;
-	export let focus: number = -1;
+	export let id: number = -1; // ID of the todo
+	export let focus: number = -1; // ID to focus
+	// When focus == -1 then nothing is considered focused.
 	export let done: boolean = false;
 
-	function handleContainerClick() {
+	const handleContainerClick = () => {
 		if (focus !== id) focus = id;
 		else focus = -1;
-	}
+	};
 </script>
 
 <div class="container" on:click={handleContainerClick} transition:fade={{ duration: 200 }}>
-    <div class="top">
-        <input class="status invisible" type="checkbox" bind:checked={done} on:change={storeState} />
-        <div class="name" class:selected={focus === id}>
+	<div class="top">
+		<input class="status invisible" type="checkbox" bind:checked={done} on:change={storeState} />
+		<div class="name" class:selected={focus === id}>
 			{name}
 		</div>
-    </div>
-    <div class="bottom">
-        <div class='empty'></div>
-        {#if focus === id}
-		<div class="content" transition:fly={{ duration: 200 }}>
-			<div class="notes">
-				{notes}
-			</div>
-		</div>
-        {/if}
-    </div>
+	</div>
 
+	<div class="bottom">
+		<div class="empty" />
+		{#if focus === id}
+			<div class="content" transition:fly={{ duration: 200 }}>
+				<div class="notes">
+					{notes}
+				</div>
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
 	.container {
-		display: grid;
-        grid-template-columns: auto auto;
-        grid-template-rows: auto auto;
-		grid-template-areas:
-        "status name"
-        "empty notes";
+		display: flex;
+		flex-direction: column;
 		border-radius: 10px;
+		gap: 0.25em;
 	}
-
-    .status {
-        margin: 0;
-        padding: 0;
-    }
-    .top {
-        display: flex;
-        flex-direction: row;
-        gap: 0.3em;
-    }
-
+	.status {
+		margin: 0;
+		padding: 0;
+	}
+	.top {
+		display: flex;
+		flex-direction: row;
+		place-items: center;
+		gap: 0.3em;
+	}
+	.bottom {
+		margin-left: 1.25em;
+	}
 	.notes {
 		color: rgb(204, 204, 204);
-        padding-left: 0.2em;
+		padding-left: 0.2em;
 	}
 
 	.name {
 		color: white;
 		border-radius: 10px;
 		width: 100%;
-        padding-left: 0.4em;
+		padding-left: 0.4em;
 	}
 
 	.selected {
 		background-color: #284474;
-        padding-left: 0.4em;
+		padding-left: 0.4em;
 	}
 
 	div {

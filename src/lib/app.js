@@ -23,12 +23,11 @@ if (browser) {
 					}
 				]
 			}
-		})
+		});
 	}
 }
 
+// Helper function for storing the ToDo state to the localStorage API.
 export const storeState = () => {
 	localStorage.setItem('simply-todo', JSON.stringify(get(state)));
 };
-
-export const selectedCategory = writable('uncategorised');

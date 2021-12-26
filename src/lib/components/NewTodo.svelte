@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
 	import { state, storeState } from '$lib/app';
 
-	let name = 'New Todo';
-	let notes = 'Notes';
+	let name: string = 'New Todo';
+	let notes: string = 'Notes';
 
-	function addTodo() {
+	// Add a todo to the LocalStorage
+	const addTodo = () => {
 		const todo = {
 			name: name,
 			notes: notes === 'Notes' ? '' : notes,
@@ -17,47 +18,49 @@
 
 		storeState();
 		$state = $state;
-	}
+	};
 
-	function handlePress(e) {
+	// Handle keypresses
+	const handlePress = (e) => {
+		// If 'Enter' add the todo
 		if (e.key === 'Enter') {
 			addTodo();
 		}
-	}
+	};
 </script>
 
 <svelte:window on:keypress={handlePress} />
 
 <div class="container">
 	<form class="entry">
-		<input 
-            class="name" 
-            bind:value={ name }
-            on:focus={ () => {
-                if (name === 'New Todo') {
-                    name = ''
-                }
-            }}
-            on:blur={ () => {
-                if (name === '') {
-                    name = 'New Todo'
-                }
-            }}
-        />
-		<input 
-            class="details" 
-            bind:value={notes} 
-            on:focus={ () => {
-                if (notes === 'Notes') {
-                    notes = ''
-                }
-            }}
-            on:blur={ () => {
-                if (notes === '') {
-                    notes = 'Notes'
-                }
-            }}
-        />
+		<input
+			class="name"
+			bind:value={name}
+			on:focus={() => {
+				if (name === 'New Todo') {
+					name = '';
+				}
+			}}
+			on:blur={() => {
+				if (name === '') {
+					name = 'New Todo';
+				}
+			}}
+		/>
+		<input
+			class="details"
+			bind:value={notes}
+			on:focus={() => {
+				if (notes === 'Notes') {
+					notes = '';
+				}
+			}}
+			on:blur={() => {
+				if (notes === '') {
+					notes = 'Notes';
+				}
+			}}
+		/>
 	</form>
 	<div class="add" on:click={addTodo}>+</div>
 </div>
